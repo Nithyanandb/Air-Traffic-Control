@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Route</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/route.css" rel="stylesheet"> <!-- Ensure this path is correct -->
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Air Traffic Control</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
+            <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/route/shortest">Find Route</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1 class="text-center">Shortest Route</h1>
+
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${route}">
+        <h3 class="text-center">Route from <span th:text="${param.origin}"></span> to <span th:text="${param.destination}"></span>:</h3>
+        <ul class="list-group mt-3">
+            <li class="list-group-item" th:each="airport : ${route}">
+                <span th:text="${airport.name}">Airport Name</span> (<span th:text="${airport.airportCode}">Airport Code</span>)
+            </li>
+        </ul>
+    </div>
+
+    <div th:if="${!route}" class="text-center mt-4">
+        <p>No route found.</p>
+    </div>
+
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" href="/route/shortest">Find Another Route</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

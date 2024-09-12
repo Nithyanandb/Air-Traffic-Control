@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .feature-box {
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .feature-box h3 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Air Traffic Control</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
+            <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/route/shortest">Find Route</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="hero-section">
+    <h1 class="display-4">Welcome to Air Traffic Control</h1>
+    <p class="lead">Manage your airports, planes, and flights efficiently.</p>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>Manage Airports</h3>
+                <p>View, add, and manage airport details effortlessly.</p>
+                <a href="/airports" class="btn btn-primary">View Airports</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>
+                    <h3>Manage Planes</h3>
+                    <p>View, add, and manage plane details for efficient operations.</p>
+                    <a href="/planes" class="btn btn-primary">View Planes</a>
+                    </h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>Find Routes</h3>
+                <p>Discover the shortest routes between airports.</p>
+                <a href="/route/shortest" class="btn btn-primary">Find Route</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
