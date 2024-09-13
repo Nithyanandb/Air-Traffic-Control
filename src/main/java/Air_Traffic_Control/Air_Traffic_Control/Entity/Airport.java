@@ -35,16 +35,16 @@ public class Airport {
     @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Plane> groundedPlanes = new HashSet<>();
 
-    // Constructor with name and airportCode
+    
     public Airport(String name, String airportCode) {
         this.name = name;
         this.airportCode = airportCode;
     }
 
-    // Constructor with all fields
+    
     public Airport(String name, String airportCode, Location location, int groundParkingSpots, boolean availability) {
         this.name = name;
-        this.airportCode = airportCode;  // Use airportCode here
+        this.airportCode = airportCode;
         this.location = location;
         this.groundParkingSpots = groundParkingSpots;
         this.availability = availability;
