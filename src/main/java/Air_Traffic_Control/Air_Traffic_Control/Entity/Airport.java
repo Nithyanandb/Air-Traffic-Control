@@ -24,7 +24,7 @@ public class Airport {
     private Long id;
 
     private String name;
-    private String airportCode;  // Ensure this field name matches the constructor and other references
+    private String airportCode;  
 
     @Embedded
     private Location location;
