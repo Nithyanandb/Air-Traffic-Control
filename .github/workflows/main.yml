@@ -1,26 +1,22 @@
-name: CI
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Trigger on push to main
-  pull_request:
-    branches:
-      - main  # Trigger on pull request to main
+      - main  # Triggers the workflow on pushes to the main branch
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Check out the code from GitHub repository
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Build with Maven
-        run: mvn clean package
+          github_token: ${{ secrets.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 }}
+          publish_dir: ./target  # Adjust this to your output directory
