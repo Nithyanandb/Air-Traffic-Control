@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+    background:black;
+    }
 
 /* Body */
 body {
@@ -144,9 +145,24 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
     }
 }
+
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e1e5e9;
+    padding: 1rem 0;
+    width: 100%;
+    text-align: center;
+    color: #343a40;
+}
+
+.footer p {
+    margin: 0;
+    color: #343a40; /* Dark text for contrast */
+}
+

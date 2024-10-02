@@ -3,75 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
+    <title>Air Traffic Control</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .hero-section {
-            background-color: #f8f9fa;
-            padding: 60px 0;
-            text-align: center;
+        /* Global Styles */
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: black;
+            color: #ffffff;
         }
-        .feature-box {
+
+        /* Overlay */
+        .overlay {
+            background: black;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .content {
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
+            background: black;
         }
-        .feature-box h3 {
-            margin-bottom: 20px;
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1140px;
+            z-index: 2;
+        }
+
+        .card-section {
+            margin-top: 2rem;
+        }
+
+        .card {
+            border: none;
+            background: black;
+            transition: transform 0.3s;
+            font-size: x-small;
+            color: aliceblue;
+        }
+.card i
+{
+    font-size: 2rem;
+    padding-top: 30px;
+}
+.card a{
+    color: rgb(158, 158, 158);
+    padding-bottom: 20pt;
+}
+        .card:hover {
+            transform: translateY(5px);
+        }
+
+
+
+       /* Button Styles */
+.btn {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem; /* Added padding for better button size */
+    border: none;
+    background: transparent; /* Keep it transparent initially */
+    color: #ffffff;
+    position: relative;
+    transition: background 0.3s ease, color 0.3s ease; /* Smooth transition for background and color */
+}
+
+.btn:after {
+    content: '';
+    display: block;
+    height: 2px; /* Height of the underline */
+    width: 100%;
+    background: #ffffff; /* Color of the underline */
+    position: absolute;
+    bottom: -10px; /* Position the underline */
+    left: 0;
+    transform: scaleX(0); /* Initially hide underline */
+    transition: transform 0.3s ease;
+}
+
+.btn:hover {
+
+    color: #ffffff; /* Change text color if needed */
+}
+
+.btn:hover:after {
+    transform: scaleX(1); /* Show underline on hover */
+}
+
+        /* Sticky footer */
+        .footer {
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            background: black;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Air Traffic Control</a>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
-            <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
-            <li class="nav-item"><a class="nav-link" href="/route/shortest">Find Route</a></li>
-        </ul>
-    </div>
-</nav>
+<!-- Dark Overlay -->
+<div class="overlay"></div>
 
-<div class="hero-section">
-    <h1 class="display-4">Welcome to Air Traffic Control</h1>
-    <p class="lead">Manage your airports, planes, and flights efficiently.</p>
+<!-- Main Content -->
+<div class="content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+        <div class="container">
+            <a class="navbar-brand" href="/">Air Traffic Control</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/route">Find Route</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="container mt-5">
+        <h1 class="text-center">Air Traffic Control System</h1>
+        <p class="text-center">Manage airports, planes, and find the shortest route between airports with this intuitive tool.</p>
+
+        <div class="row card-section">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa-solid fa-building fa-3x mb-3"></i>
+
+                        <a href="/airports" class="btn">View All Airports</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa-solid fa-plane fa-3x mb-3"></i>
+
+                        <a href="/planes" class="btn">View All Planes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fa-solid fa-route fa-3x mb-3"></i>
+
+                        <a href="/route" class="btn">Find Shortest Route</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="feature-box">
-                <h3>Manage Airports</h3>
-                <p>View, add, and manage airport details effortlessly.</p>
-                <a href="/airports" class="btn btn-primary">View Airports</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-box">
-                <h3>
-                    <h3>Manage Planes</h3>
-                    <p>View, add, and manage plane details for efficient operations.</p>
-                    <a href="/planes" class="btn btn-primary">View Planes</a>
-                    </h3>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-box">
-                <h3>Find Routes</h3>
-                <p>Discover the shortest routes between airports.</p>
-                <a href="/route/shortest" class="btn btn-primary">Find Route</a>
-            </div>
-        </div>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 International Air Traffic Control System. All Rights Reserved.</p>
     </div>
-</div>
+</footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

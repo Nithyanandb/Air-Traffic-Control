@@ -1,0 +1,41 @@
+name: Build and Deploy Air Traffic Control
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the code from GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up JDK 17 for building the project
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # Build the project with Maven
+      - name: Build with Maven
+        run: mvn clean package
+
+      # Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.nithyanandb}}
+          password: ${{ secrets.JS45rA_.v+WAxUc}}
+
+      # Build Docker image
+      - name: Build Docker image
+        run: docker build -t your-dockerhub-username/air-traffic-control:latest .
+
+      # Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: docker push your-dockerhub-username/air-traffic-control:latest

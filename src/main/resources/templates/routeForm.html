@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route Details</title>
+    <title>Find Shortest Route</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -20,25 +20,26 @@
 </nav>
 
 <div class="container mt-4">
-    <h1>Shortest Route from <span th:text="${origin}"></span> to <span th:text="${destination}"></span></h1>
+    <h1>Find Shortest Route</h1>
 
-    <div th:if="${routeSteps != null}">
-        <p>Total Distance: <span th:text="${totalDistance}"></span> km</p>
-
-        <ol>
-            <li th:each="step : ${routeSteps}" th:text="${step}"></li>
-        </ol>
-    </div>
-
-    <div th:if="${routeSteps == null}">
-        <p>No route found. Please check the airport codes and try again.</p>
-    </div>
-
-    <a class="btn btn-primary" href="/route">Find Another Route</a>
-</div>  
+    <form action="/shortest" method="get">
+        <div class="form-group">
+            <label for="origin">Origin Airport Code</label>
+            <input type="text" class="form-control" id="origin" name="origin" placeholder="Enter origin code" required>
+        </div>
+        <div class="form-group">
+            <label for="destination">Destination Airport Code</label>
+            <input type="text" class="form-control" id="destination" name="destination" placeholder="Enter destination code" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Find Route</button>
+    </form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+
+
 </html>
