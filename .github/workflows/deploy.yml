@@ -25,17 +25,9 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      # Log in to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          username: ${{ secrets.nithyanandb}}
-          password: ${{ secrets.JS45rA_.v+WAxUc}}
-
-      # Build Docker image
-      - name: Build Docker image
-        run: docker build -t your-dockerhub-username/air-traffic-control:latest .
-
-      # Push Docker image to Docker Hub
-      - name: Push Docker image
-        run: docker push your-dockerhub-username/air-traffic-control:latest
+          github_token: ${{ secrets.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 }}  # Use your token secret
+          publish_dir: ./target  # Publish from the target directory
