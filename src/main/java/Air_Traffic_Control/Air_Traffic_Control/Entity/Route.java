@@ -4,17 +4,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
+
+
 
 @Data
 @Entity
-public class Airport {
+public class Route {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String code;
-    private String name;
-    private String location;
+
+
+
+    @ManyToOne
+    private Airport origin;
+    @ManyToOne
+    private Airport destination;
+
+
+    public Route() {}
+
+    public Route(Airport origin, Airport destination) {
+        this.origin = origin;
+        this.destination = destination;
+    }
+
+
 }

@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+    background:black;
+    }
 
 /* Body */
 body {
@@ -144,7 +145,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;

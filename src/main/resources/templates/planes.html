@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planes</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
+    <link href="/templates/static/style.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,14 +15,18 @@
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
             <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
-            <li class="nav-item"><a class="nav-link" href="/route/shortest">Find Route</a></li>
+            <li class="nav-item"><a class="nav-link" href="/route">Find Shortest Route</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container mt-4">
-    <h1 class="text-center">Planes</h1>
-    <form action="/planes" method="post" class="mb-4">
+    <h1 class="text-center">Manage Planes</h1>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form action="/planes" method="post">
         <div class="form-group">
             <label for="name">Plane Name</label>
             <input type="text" id="name" name="name" class="form-control" required>
@@ -33,24 +37,37 @@
         </div>
         <button type="submit" class="btn btn-primary">Add Plane</button>
     </form>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Model</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="plane : ${planes}">
-            <td th:text="${plane.name}">Plane Name</td>
-            <td th:text="${plane.model}">Plane Model</td>
-        </tr>
-        </tbody>
-    </table>
+
+    
+    <div class="mt-4">
+        <h2>Existing Planes</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Model</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="plane : ${planes}">
+                <td th:text="${plane.name}"></td>
+                <td th:text="${plane.model}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+<footer class="footer">
+    <div class="container text-center">
+        <p>&copy; 2024 Air Traffic Control. All rights reserved.</p>
+    </div>
+</footer>
+
 </html>

@@ -2,20 +2,27 @@ package Air_Traffic_Control.Air_Traffic_Control.Service;
 
 import Air_Traffic_Control.Air_Traffic_Control.Entity.Airport;
 import Air_Traffic_Control.Air_Traffic_Control.Entity.Flight;
+import Air_Traffic_Control.Air_Traffic_Control.Entity.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.*;
 
+@Service
 public class DijkstraAlgorithm {
 
-    // Method to find the shortest path using Dijkstra's algorithm
-    public List<Airport> findShortestPath(Map<Airport, List<Flight>> graph, Airport start, Airport end) {
-        // Initialize data structures
+    private static final Logger logger = LoggerFactory.getLogger(DijkstraAlgorithm.class);
+
+    public Result findShortestPath(Map<Airport, List<Flight>> graph, Airport start, Airport end) {
         Map<Airport, Double> distances = new HashMap<>();
         Map<Airport, Airport> previousNodes = new HashMap<>();
         PriorityQueue<Airport> priorityQueue = new PriorityQueue<>(Comparator.comparingDouble(distances::get));
         List<Airport> path = new ArrayList<>();
+        double totalDistance = 0.0;
 
-        // Set initial distances to infinity and start node distance to 0
+        // Initialize distances and previous nodes
         for (Airport airport : graph.keySet()) {
             distances.put(airport, Double.MAX_VALUE);
             previousNodes.put(airport, null);
@@ -26,28 +33,46 @@ public class DijkstraAlgorithm {
         while (!priorityQueue.isEmpty()) {
             Airport current = priorityQueue.poll();
 
+            // Early exit if we reach the destination
             if (current.equals(end)) {
-                // Reconstruct the path from end to start
+                logger.info("Reached destination: {}", end.getCode());
                 while (previousNodes.get(current) != null) {
                     path.add(current);
                     current = previousNodes.get(current);
                 }
                 path.add(start);
                 Collections.reverse(path);
-                return path;
+
+                totalDistance = distances.get(end);
+
+                // Prepare route steps for result
+                List<String> routeSteps = new ArrayList<>();
+                for (Airport airport : path) {
+                    routeSteps.add(airport.getCode());
+                }
+
+                return new Result(routeSteps, totalDistance);
             }
 
-            for (Flight flight : graph.get(current)) {
-                Airport neighbor = flight.getDestination();
-                double newDist = distances.get(current) + flight.getDistance();
-                if (newDist < distances.get(neighbor)) {
-                    distances.put(neighbor, newDist);
-                    previousNodes.put(neighbor, current);
-                    priorityQueue.add(neighbor);
+            // Update neighbors (flights)
+            List<Flight> flights = graph.get(current);
+            if (flights != null) {
+                for (Flight flight : flights) {
+                    Airport neighbor = flight.getDestination();
+                    double newDist = distances.get(current) + flight.getDistance();
+
+                    // If a shorter path to the neighbor is found
+                    if (newDist < distances.get(neighbor)) {
+                        distances.put(neighbor, newDist);
+                        previousNodes.put(neighbor, current);
+                        priorityQueue.add(neighbor);
+                    }
                 }
             }
         }
 
-        return path; // Return empty path if no route found
+        logger.warn("No path found from {} to {}", start.getCode(), end.getCode());
+        // Return empty result if no path is found
+        return new Result(Collections.emptyList(), 0.0);
     }
 }

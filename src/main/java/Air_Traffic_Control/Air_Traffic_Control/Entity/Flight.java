@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import java.time.LocalDateTime;
+
 
 @Data
 @Entity
@@ -22,11 +22,16 @@ public class Flight {
     @ManyToOne
     private Airport destination;
 
-    @ManyToOne
-    private Plane plane;
+    private double distance;
 
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
 
-    private double distance; // Distance in kilometers (or any other unit)
+    public Flight() {}
+
+    public Flight(Airport origin, Airport destination, double distance) {
+        this.origin = origin;
+        this.destination = destination;
+        this.distance = distance;
+    }
+
+
 }

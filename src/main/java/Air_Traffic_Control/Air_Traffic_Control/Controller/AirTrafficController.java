@@ -1,25 +1,21 @@
 package Air_Traffic_Control.Air_Traffic_Control.Controller;
 
 import Air_Traffic_Control.Air_Traffic_Control.Entity.Airport;
-import Air_Traffic_Control.Air_Traffic_Control.Entity.Flight;
 import Air_Traffic_Control.Air_Traffic_Control.Entity.Plane;
+import Air_Traffic_Control.Air_Traffic_Control.Entity.Result;
+import Air_Traffic_Control.Air_Traffic_Control.Service.PlaneService;
 import Air_Traffic_Control.Air_Traffic_Control.Service.AirportService;
 import Air_Traffic_Control.Air_Traffic_Control.Service.FlightService;
-import Air_Traffic_Control.Air_Traffic_Control.Service.PlaneService;
 import Air_Traffic_Control.Air_Traffic_Control.Service.RouteService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/")
 public class AirTrafficController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AirTrafficController.class);
 
     private final AirportService airportService;
     private final FlightService flightService;
@@ -33,80 +29,63 @@ public class AirTrafficController {
         this.routeService = routeService;
     }
 
-    // Serve the index page on root access
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("airports", airportService.getAllAirports());
-        model.addAttribute("planes", planeService.getAllPlanes());
-        return "index"; // Corresponds to Thymeleaf template 'index.html'
+    public String index() {
+        return "index";
     }
 
-    // Get list of airports
     @GetMapping("/airports")
     public String getAirports(Model model) {
-        List<Airport> airports = airportService.getAllAirports();
-        model.addAttribute("airports", airports);
-        return "airports"; // Corresponds to Thymeleaf template 'airports.html'
+
+        model.addAttribute("airports", airportService.getAllAirports());
+        return "airports";
     }
 
-    // Add a new airport
     @PostMapping("/airports")
-    public String addAirport(@RequestParam String name, @RequestParam String code) {
-        try {
-            airportService.saveAirport(new Airport(name, code));
-        } catch (Exception e) {
-            logger.error("Error adding airport: ", e);
-            // Handle error (e.g., show error page or message)
-        }
+    public String addAirport(@RequestParam String name, @RequestParam String code, @RequestParam String location) {
+        Airport newAirport = new Airport();
+        newAirport.setName(name);
+        newAirport.setCode(code);
+        newAirport.setLocation(location);
+        airportService.addAirport(newAirport);
         return "redirect:/airports";
     }
 
-    // Add a new flight
-    @PostMapping("/flights")
-    public String addFlight(@RequestParam Long planeId, @RequestParam Long originId, @RequestParam Long destinationId, @RequestParam double distance) {
-        try {
-            flightService.addFlight(planeId, originId, destinationId, distance);
-        } catch (Exception e) {
-            logger.error("Error adding flight: ", e);
-            // Handle error (e.g., show error page or message)
-        }
-        return "redirect:/flights";
-    }
-
-    // Get list of planes
     @GetMapping("/planes")
     public String getPlanes(Model model) {
-        List<Plane> planes = planeService.getAllPlanes();
-        model.addAttribute("planes", planes);
-        return "planes"; // Corresponds to Thymeleaf template 'planes.html'
+        model.addAttribute("planes", planeService.getAllPlane());
+        return "planes";
     }
 
-    // Add a new plane
     @PostMapping("/planes")
-    public String addPlane(@RequestParam String name, @RequestParam String model) {
-        try {
-            planeService.savePlane(new Plane(name, model));
-        } catch (Exception e) {
-            logger.error("Error adding plane: ", e);
-            // Handle error (e.g., show error page or message)
-        }
+    public String addPlane(@RequestParam String name, @RequestParam String code) {
+        Plane newPlane = new Plane();
+        newPlane.setName(name);
+        newPlane.setModel(code);
+        planeService.addPlane(newPlane);
         return "redirect:/planes";
     }
 
-    @GetMapping("/route/shortest")
+
+    @GetMapping("/route")
+    public String showRouteForm() {
+        return "routeForm";
+    }
+
+    @GetMapping("/shortest")
     public String getShortestRoute(@RequestParam(required = false) String origin,
                                    @RequestParam(required = false) String destination,
                                    Model model) {
         if (origin == null || destination == null) {
-            model.addAttribute("error", "Both origin and destination parameters are required.");
-            return "error"; // Corresponds to Thymeleaf template 'error.html'
+            return "redirect:/route";
         }
 
-        List<Airport> route = routeService.findShortestRoute(origin, destination);
-        model.addAttribute("route", route);
-        model.addAttribute("param", new RouteParameters(origin, destination));
+        Result result = routeService.findShortestPath(origin, destination);
+        model.addAttribute("origin", origin);
+        model.addAttribute("destination", destination);
+        model.addAttribute("routeSteps", result.getRouteSteps());
+        model.addAttribute("totalDistance", result.getTotalDistance());
 
-        return "route"; // Corresponds to Thymeleaf template 'route.html'
+        return "route";
     }
-
 }
