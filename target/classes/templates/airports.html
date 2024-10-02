@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airports</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/templates/static/style.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Air Traffic Control</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/airports">Airports</a></li>
+            <li class="nav-item"><a class="nav-link" href="/planes">Planes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/route">Find Shortest Route</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1 class="text-center">Manage Airports</h1>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form action="/airports" method="post">
+        <div class="form-group">
+            <label for="name">Airport Name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="code">Airport Code</label>
+            <input type="text" id="code" name="code" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="location">Airport Location</label>
+            <input type="text" id="location" name="location" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Airport</button>
+    </form>
+
+    <div class="mt-4">
+        <h2>Existing Airports</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="airport : ${airports}">
+                <td th:text="${airport.name}"></td>
+                <td th:text="${airport.code}"></td>
+                <td th:text="${airport.location}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+<footer class="footer">
+    <div class="container text-center">
+        <p>&copy; 2024 Air Traffic Control. All rights reserved.</p>
+    </div>
+</footer>
+
+</html>
